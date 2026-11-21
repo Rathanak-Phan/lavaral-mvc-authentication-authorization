@@ -12,6 +12,8 @@
         <h2 class="text-center my-5">Register</h2>
 
         <form action="{{ route('register.store') }}" method="POST" class="col-4 mx-auto">
+            @csrf
+
             <div class="my-3">
                 <label for="" class="form-label">Name</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid

@@ -11,10 +11,34 @@
     <div class="container">
         <h2 class="text-center my-5">Login</h2>
 
-        <form action="">
+        <form action="{{ route('login.store') }}" method="POST" class="col-4 mx-auto">
+            @csrf
 
+            <div class="my-3">
+                <label for="" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror">
 
-            <button class="btn btn-primary">Login</button>
+                @error('email')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="my-3">
+                <label for="" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
+
+                @error('password')
+                    <div class="text-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <p>If not acc => <a href="{{ route('register') }}">register</a></p>
+
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
 </body>

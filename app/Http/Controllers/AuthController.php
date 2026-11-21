@@ -4,12 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Expr\FuncCall;
 
 class AuthController extends Controller
 {
     public function login() {
         return view('login');
+    }
+
+    public function handleLogin(Request $request) {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ], [
+            // Email validation messages
+            'email.required' => 'Email is required.',
+            'email.email' => 'Please enter a valid email address.',
+
+            // Password validation messages
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters.',
+        ]);
+
+        if (Auth::attempt($validated)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('user.dashboard');
+        }
     }
 
     public function register() {
