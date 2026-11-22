@@ -9,7 +9,11 @@
 </head>
 <body>
     <div>
-        
+        <h1>Welcome to user dashboard</h1>
+
+        <form action="{{ route('logout') }}" method="POST">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
     </div>
 </body>
 </html>

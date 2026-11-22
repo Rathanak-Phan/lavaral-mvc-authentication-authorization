@@ -14,5 +14,13 @@ Route::post('/login', [AuthController::class, 'handleLogin'])->name('login.store
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'handleRegister'])->name('register.store');
 
-Route::get('/user/dashboard', [DashboardController::class, 'userDashboard'])->name('user.dashboard');
-Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/user/dashboard', [DashboardController::class, 'userDashboard'])->name('user.dashboard');
+});
+
+Route::middleware(['auth', 'admin'])->group(function() {
+    Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
